@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from "@nestjs/common";
+import { Controller, Get, Param, Post } from "@nestjs/common";
 
 import { GoApiWrapperService } from "./go-api-wrapper.service";
 
@@ -17,15 +17,17 @@ export class GoApiWrapperController {
     return await this.goApiWrapperService.getData(ids);
   }
 
+  @Get("/get-data/:pattern")
+  async getDataByPattern(@Param("pattern") pattern: string) {
+    return await this.goApiWrapperService.redisCacheManager.getKeys(pattern);
+  }
+
   @Post("/set-data")
   async setData() {
-    const data = [];
-    for (let index = 0; index < 12; index++) {
-      data.push({
-        key: index + "",
-        value: index + "",
-      });
-    }
+    const data = [
+      { key: "businessPartner_1", value: "bp1ID" },
+      { key: "bank_1", value: "bank1ID" },
+    ];
 
     await this.goApiWrapperService.setData(data);
 

@@ -3,11 +3,11 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Cache } from "cache-manager";
 
 @Injectable()
-export class RedisCacheMangerService {
-  constructor(@Inject(CACHE_MANAGER) readonly cacheManger: Cache) {}
+export class RedisCacheManagerService {
+  constructor(@Inject(CACHE_MANAGER) readonly cacheManager: Cache) {}
 
   public async getData<T>(keys: string[]) {
-    const data = await this.cacheManger.store.mget(...keys);
+    const data = await this.cacheManager.store.mget(...keys);
 
     const response: Record<string, T> = {};
     for (let index = 0; index < keys.length; index++) {
@@ -15,6 +15,17 @@ export class RedisCacheMangerService {
     }
 
     return response;
+  }
+
+  public async getKeys(pattern: string) {
+    return await this.cacheManager.store.keys("businessPartner_.*");
+  }
+
+  public async setData(data: { key: string; value: any }[]) {
+    //TODO: Make mset work
+    for (let entity of data) {
+      await this.cacheManager.set(entity.key, entity.value);
+    }
   }
 
   public async setCache(data: { key: string; value: any }[]) {
@@ -25,10 +36,16 @@ export class RedisCacheMangerService {
     );
     const args: [string, any][] = data.map(({ key, value }) => [key, value]);
 
-    await this.cacheManger.store.mset([["0", "0"], ["2", {}]], 5 * 1000);
+    await this.cacheManager.store.mset(
+      [
+        ["0", "0"],
+        ["2", {}],
+      ],
+      5 * 1000
+    );
   }
 
   public async invalidateCache() {
-    await this.cacheManger.reset();
+    await this.cacheManager.reset();
   }
 }

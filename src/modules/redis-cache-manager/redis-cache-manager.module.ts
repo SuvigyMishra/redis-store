@@ -3,7 +3,7 @@ import { Module } from "@nestjs/common";
 import { redisStore } from "cache-manager-redis-store";
 import { RedisClientOptions } from "redis";
 
-import { RedisCacheMangerService } from "./redis-cache-manager.service";
+import { RedisCacheManagerService } from "./redis-cache-manager.service";
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { RedisCacheMangerService } from "./redis-cache-manager.service";
       port: 6379,
     }),
   ],
-  providers: [RedisCacheMangerService],
-  exports: [RedisCacheMangerService],
+  providers: [RedisCacheManagerService],
+  exports: [RedisCacheManagerService],
 })
 export class RedisCacheManagerModule {}
