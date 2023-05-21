@@ -1,0 +1,48 @@
+{
+	"info": {
+		"_postman_id": "92ad3a50-c96a-46a1-b17b-b342594116cd",
+		"name": "redis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23552490"
+	},
+	"item": [
+		{
+			"name": "Set redis data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/set-data",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"set-data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get redis data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/get-data",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"get-data"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
